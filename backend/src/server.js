@@ -84,8 +84,9 @@ function createApp() {
       return response.status(404).json({ error: "No existe una emergencia activa con ese ID." });
     }
 
-    emergency.status = "cancelled";
+    emergency.status = "finalized";
     emergency.cancelledAt = new Date().toISOString();
+    emergency.finishedAt = emergency.cancelledAt;
     return response.json(emergency);
   });
 
@@ -93,7 +94,10 @@ function createApp() {
     const active = [...emergencies.values()].filter(
       (emergency) => emergency.status === "active",
     );
-    return response.json({ emergencies: active });
+    const finalized = [...emergencies.values()].filter(
+      (emergency) => emergency.status === "finalized",
+    );
+    return response.json({ emergencies: active, finalized });
   });
 
   app.use((error, _request, response, _next) => {

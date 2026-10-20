@@ -17,6 +17,7 @@ test("una instancia nueva del backend empieza sin emergencias anteriores", async
   const freshApp = createApp();
   const active = await request(freshApp).get("/api/sos/active").expect(200);
   assert.deepEqual(active.body.emergencies, []);
+  assert.deepEqual(active.body.finalized, []);
 });
 
 before(async () => {
@@ -53,8 +54,11 @@ test("rechaza coordenadas inválidas", async () => {
     .expect(400);
 });
 
-test("cancela una emergencia y ya no la lista como activa", async () => {
-  await request(app).post(`/api/sos/${emergency.id}/cancel`).expect(200);
+test("finaliza una emergencia y la muestra como Finalizada", async () => {
+  const finished = await request(app).post(`/api/sos/${emergency.id}/cancel`).expect(200);
+  assert.equal(finished.body.status, "finalized");
   const active = await request(app).get("/api/sos/active").expect(200);
   assert.equal(active.body.emergencies.length, 0);
+  assert.equal(active.body.finalized.length, 1);
+  assert.equal(active.body.finalized[0].id, emergency.id);
 });
