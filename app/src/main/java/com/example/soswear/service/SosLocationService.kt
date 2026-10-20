@@ -27,6 +27,9 @@ import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.IOException
+import java.net.ConnectException
+import java.net.SocketTimeoutException
+import java.net.UnknownHostException
 import java.util.ArrayDeque
 
 class SosLocationService : Service() {
@@ -190,14 +193,21 @@ class SosLocationService : Service() {
                             it.copy(
                                 connectionStatus = if (cancelRequested) "Sincronizando cancelación" else "Conectado",
                                 lastSentAt = operation.location.timeMillis,
+                                lastError = null,
                             )
                         }
                     }
                     is PendingOperation.Location -> SosSessionStore.update {
-                        it.copy(lastSentAt = operation.location.timeMillis, connectionStatus = "Conectado")
+                        it.copy(
+                            lastSentAt = operation.location.timeMillis,
+                            connectionStatus = "Conectado",
+                            lastError = null,
+                        )
                     }
                     PendingOperation.Cancel -> {
-                        SosSessionStore.update { it.copy(connectionStatus = "SOS detenido", message = null) }
+                        SosSessionStore.update {
+                            it.copy(connectionStatus = "SOS detenido", lastError = null, message = null)
+                        }
                         stopForeground(STOP_FOREGROUND_REMOVE)
                         stopSelf()
                         return
@@ -217,10 +227,12 @@ class SosLocationService : Service() {
                 } else {
                     pendingOperations.addFirst(operation)
                 }
-                Log.w(TAG, "Backend no disponible; se reintentará la solicitud SOS.", error)
+                val errorSummary = error.toConnectionSummary()
+                Log.w(TAG, "Backend no disponible; se reintentará la solicitud SOS: $errorSummary", error)
                 SosSessionStore.update {
                     it.copy(
                         connectionStatus = if (cancelRequested) "Cancelación pendiente" else "Sin conexión · reintentando",
+                        lastError = errorSummary,
                         message = if (cancelRequested) {
                             "Cancelación en cola local; se reenviará al recuperar la conexión."
                         } else {
@@ -244,6 +256,23 @@ class SosLocationService : Service() {
                 Manifest.permission.FOREGROUND_SERVICE_LOCATION,
             ) == PackageManager.PERMISSION_GRANTED
         return hasLocation && hasServicePermission
+    }
+
+    private fun IOException.toConnectionSummary(): String {
+        val details = message.orEmpty()
+        return when {
+            Regex("""HTTP \d{3}""").find(details) != null ->
+                Regex("""HTTP \d{3}""").find(details)?.value ?: "Error HTTP"
+            this is SocketTimeoutException -> "timeout"
+            this is UnknownHostException -> "host no resuelto"
+            this is ConnectException &&
+                (details.contains("ENETUNREACH", ignoreCase = true) ||
+                    details.contains("Network is unreachable", ignoreCase = true)) ->
+                "sin ruta de red (activa Wi-Fi)"
+            this is ConnectException -> "conexión rechazada"
+            details.startsWith("URL inválida", ignoreCase = true) -> details
+            else -> details.takeIf(String::isNotBlank) ?: javaClass.simpleName
+        }
     }
 
     private fun refreshNotification() {

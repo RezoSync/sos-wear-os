@@ -16,6 +16,7 @@ data class SosUiState(
     val lastLocationAt: Long? = null,
     val lastSentAt: Long? = null,
     val connectionStatus: String = "Sin iniciar",
+    val lastError: String? = null,
     val message: String? = null,
 )
 

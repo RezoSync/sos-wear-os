@@ -183,6 +183,16 @@ fun ActiveSosScreen(
                 textAlign = TextAlign.Center,
             )
         }
+        session.lastError?.let { error ->
+            item {
+                Text(
+                    "Último error: $error",
+                    color = Color(0xFFFF777D),
+                    fontSize = 10.sp,
+                    textAlign = TextAlign.Center,
+                )
+            }
+        }
         session.message?.let { message ->
             item {
                 Text(message, color = Color(0xFFFFC857), fontSize = 10.sp, textAlign = TextAlign.Center)
