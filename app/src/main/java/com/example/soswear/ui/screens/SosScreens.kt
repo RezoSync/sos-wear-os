@@ -2,6 +2,7 @@ package com.example.soswear.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -22,6 +23,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
@@ -50,18 +52,26 @@ fun HomeScreen(
     val hapticFeedback = LocalHapticFeedback.current
     ScalingLazyColumn(
         modifier = Modifier.fillMaxSize(),
-        contentPadding = PaddingValues(horizontal = 10.dp, vertical = 24.dp),
+        contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
+        userScrollEnabled = false,
     ) {
         item {
-            Text("SOS Wear", color = MaterialTheme.colors.onBackground, fontWeight = FontWeight.Bold)
+            Text(
+                "SOS Wear",
+                color = MaterialTheme.colors.onBackground,
+                fontWeight = FontWeight.Bold,
+                fontSize = 13.sp,
+                maxLines = 1,
+            )
         }
         item {
             Text(
-                "Mantén pulsado solo en una emergencia",
+                "Mantén pulsado",
                 textAlign = TextAlign.Center,
-                fontSize = 12.sp,
+                fontSize = 11.sp,
+                maxLines = 1,
                 color = MaterialTheme.colors.onBackground.copy(alpha = 0.75f),
             )
         }
@@ -71,11 +81,11 @@ fun HomeScreen(
                     hapticFeedback.performHapticFeedback(HapticFeedbackType.LongPress)
                     onStartSos()
                 },
-                modifier = Modifier.size(108.dp),
+                modifier = Modifier.size(120.dp),
                 shape = CircleShape,
                 colors = ButtonDefaults.buttonColors(backgroundColor = SosRed),
             ) {
-                Text("SOS", fontSize = 30.sp, fontWeight = FontWeight.Bold)
+                Text("SOS", fontSize = 32.sp, fontWeight = FontWeight.Bold)
             }
         }
         if (state.session.message != null) {
@@ -89,10 +99,14 @@ fun HomeScreen(
             }
         }
         item {
-            Chip(
-                label = { Text("Configuración") },
-                onClick = onSettings,
-                modifier = Modifier.fillMaxWidth(),
+            Text(
+                text = "Configuración",
+                modifier = Modifier
+                    .clickable(role = Role.Button, onClick = onSettings)
+                    .padding(vertical = 4.dp),
+                fontSize = 11.sp,
+                color = MaterialTheme.colors.onBackground.copy(alpha = 0.75f),
+                maxLines = 1,
             )
         }
     }
