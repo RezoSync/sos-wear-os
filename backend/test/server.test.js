@@ -13,6 +13,12 @@ const emergency = {
   timestamp: "2026-10-19T12:00:00.000Z",
 };
 
+test("una instancia nueva del backend empieza sin emergencias anteriores", async () => {
+  const freshApp = createApp();
+  const active = await request(freshApp).get("/api/sos/active").expect(200);
+  assert.deepEqual(active.body.emergencies, []);
+});
+
 before(async () => {
   await request(app).post("/api/sos/test-emergency-1/cancel");
 });
