@@ -52,20 +52,11 @@ fun HomeScreen(
     val hapticFeedback = LocalHapticFeedback.current
     ScalingLazyColumn(
         modifier = Modifier.fillMaxSize(),
-        contentPadding = PaddingValues(start = 8.dp, top = 4.dp, end = 8.dp, bottom = 24.dp),
+        contentPadding = PaddingValues(start = 8.dp, top = 4.dp, end = 8.dp, bottom = 28.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
+        verticalArrangement = Arrangement.Bottom,
         userScrollEnabled = false,
     ) {
-        item {
-            Text(
-                "SOS Wear",
-                color = MaterialTheme.colors.onBackground,
-                fontWeight = FontWeight.Bold,
-                fontSize = 13.sp,
-                maxLines = 1,
-            )
-        }
         item {
             Text(
                 "Mantén pulsado",
@@ -76,17 +67,15 @@ fun HomeScreen(
             )
         }
         item {
-            Button(
-                onClick = {
-                    hapticFeedback.performHapticFeedback(HapticFeedbackType.LongPress)
-                    onStartSos()
-                },
-                modifier = Modifier.size(96.dp),
-                shape = CircleShape,
-                colors = ButtonDefaults.buttonColors(backgroundColor = SosRed),
-            ) {
-                Text("SOS", fontSize = 32.sp, fontWeight = FontWeight.Bold)
-            }
+            Text(
+                text = "Configuración",
+                modifier = Modifier
+                    .clickable(role = Role.Button, onClick = onSettings)
+                    .padding(vertical = 4.dp),
+                fontSize = 11.sp,
+                color = MaterialTheme.colors.onBackground.copy(alpha = 0.75f),
+                maxLines = 1,
+            )
         }
         if (state.session.message != null) {
             item {
@@ -99,15 +88,17 @@ fun HomeScreen(
             }
         }
         item {
-            Text(
-                text = "Configuración",
-                modifier = Modifier
-                    .clickable(role = Role.Button, onClick = onSettings)
-                    .padding(vertical = 4.dp),
-                fontSize = 11.sp,
-                color = MaterialTheme.colors.onBackground.copy(alpha = 0.75f),
-                maxLines = 1,
-            )
+            Button(
+                onClick = {
+                    hapticFeedback.performHapticFeedback(HapticFeedbackType.LongPress)
+                    onStartSos()
+                },
+                modifier = Modifier.size(80.dp),
+                shape = CircleShape,
+                colors = ButtonDefaults.buttonColors(backgroundColor = SosRed),
+            ) {
+                Text("SOS", fontSize = 26.sp, fontWeight = FontWeight.Bold)
+            }
         }
     }
 }
