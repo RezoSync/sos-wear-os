@@ -54,8 +54,7 @@ La tabla debe mostrar una ruta de red. Sin Wi-Fi o ruta disponible, el reloj no 
 
 ## Capturas
 
-- Reloj: TODO: captura (`docs/reloj.png`)
-- Dashboard: TODO: captura (`docs/dashboard.png`)
+No hay capturas disponibles en `docs/`; se omiten hasta que existan las imágenes.
 
 ## Simular una ruta GPS
 
@@ -85,10 +84,10 @@ En Android Studio, abre **Settings > Build Tools > Gradle > Gradle JDK** y selec
 
 - [ ] **Permiso denegado:** deniega ubicación precisa e inicia SOS. La app debe explicar que necesita el permiso y no empezar el rastreo.
 - [ ] **Cancelar cuenta regresiva:** pulsa SOS y luego **CANCELAR** antes de que transcurran cinco segundos. No debe aparecer una emergencia en el dashboard.
-- [ ] **SOS completo:** activa Wi-Fi, inicia el backend, reproduce la ruta GPX y confirma que el dashboard muestra el dispositivo y actualiza sus coordenadas.
+- [x] **SOS completo:** activa Wi-Fi, inicia el backend, reproduce la ruta GPX y confirma que el dashboard muestra el dispositivo y actualiza sus coordenadas.
 - [ ] **Backend apagado y reconectado:** inicia SOS con el backend detenido. La app debe indicar el error de conexión y reintentar; arranca el backend y comprueba que se sincronizan las ubicaciones.
-- [ ] **Detener SOS:** pulsa **Detener SOS** en el reloj. El dashboard debe conservar el registro, mostrar **Finalizada** y retirar el dispositivo de los activos.
-- [ ] **Ubicación en el mapa:** comprueba que el marcador se desplaza suavemente y el mapa enfoca/ajusta el zoom al dispositivo activo.
+- [x] **Detener SOS:** pulsa **Detener SOS** en el reloj. El dashboard debe conservar el registro, mostrar **Finalizada** y retirar el dispositivo de los activos.
+- [x] **Ubicación en el mapa:** comprueba que el marcador se desplaza suavemente y el mapa enfoca/ajusta el zoom al dispositivo activo.
 - [ ] **Backend reiniciado:** detén y vuelve a arrancar Node.js. El dashboard debe comenzar vacío y sin emergencias de ejecuciones anteriores.
 
 ## Pruebas y compilación
