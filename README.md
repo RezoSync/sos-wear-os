@@ -54,8 +54,6 @@ La tabla debe mostrar una ruta de red. Sin Wi-Fi o ruta disponible, el reloj no 
 
 ## Capturas
 
-No hay capturas disponibles en `docs/`; se omiten hasta que existan las imágenes.
-
 ## Simular una ruta GPS
 
 1. Arranca el emulador Wear OS y abre **Extended Controls** (`…`) desde la ventana del emulador.
