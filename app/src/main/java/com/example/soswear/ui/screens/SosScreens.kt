@@ -52,7 +52,7 @@ fun HomeScreen(
     val hapticFeedback = LocalHapticFeedback.current
     ScalingLazyColumn(
         modifier = Modifier.fillMaxSize(),
-        contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp),
+        contentPadding = PaddingValues(horizontal = 8.dp, top = 4.dp, bottom = 24.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
         userScrollEnabled = false,
@@ -81,7 +81,7 @@ fun HomeScreen(
                     hapticFeedback.performHapticFeedback(HapticFeedbackType.LongPress)
                     onStartSos()
                 },
-                modifier = Modifier.size(120.dp),
+                modifier = Modifier.size(96.dp),
                 shape = CircleShape,
                 colors = ButtonDefaults.buttonColors(backgroundColor = SosRed),
             ) {
