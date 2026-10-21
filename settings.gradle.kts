@@ -16,3 +16,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "SOSWear"
 include(":app")
+include(":phone")
