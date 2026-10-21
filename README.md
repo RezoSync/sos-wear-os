@@ -52,6 +52,11 @@ adb -s emulator-5554 shell ip route
 
 La tabla debe mostrar una ruta de red. Sin Wi-Fi o ruta disponible, el reloj no podrá acceder a `10.0.2.2`.
 
+## Capturas
+
+- Reloj: TODO: captura (`docs/reloj.png`)
+- Dashboard: TODO: captura (`docs/dashboard.png`)
+
 ## Simular una ruta GPS
 
 1. Arranca el emulador Wear OS y abre **Extended Controls** (`…`) desde la ventana del emulador.
@@ -71,6 +76,10 @@ Invoke-RestMethod -Method Post -Uri http://localhost:3000/api/sos -ContentType '
 ```
 
 La respuesta creada contiene `status: "active"`. El dashboard consume `GET /api/sos/active`, que devuelve los arreglos `emergencies` y `finalized`.
+
+## Si no compila en otra máquina
+
+En Android Studio, abre **Settings > Build Tools > Gradle > Gradle JDK** y selecciona **JDK 21** (no JDK 25). Instala también el SDK de Android que requiera el proyecto desde el SDK Manager.
 
 ## Checklist de pruebas
 
