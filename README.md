@@ -52,8 +52,6 @@ adb -s emulator-5554 shell ip route
 
 La tabla debe mostrar una ruta de red. Sin Wi-Fi o ruta disponible, el reloj no podrá acceder a `10.0.2.2`.
 
-## Capturas
-
 ## Simular una ruta GPS
 
 1. Arranca el emulador Wear OS y abre **Extended Controls** (`…`) desde la ventana del emulador.
@@ -62,6 +60,8 @@ La tabla debe mostrar una ruta de red. Sin Wi-Fi o ruta disponible, el reloj no 
 4. Inicia SOS desde el reloj y comprueba que las coordenadas y el marcador cambian en el dashboard.
 
 La ruta de prueba recorre un tramo corto del centro de Ciudad de México.
+
+En la demo se fijó la ubicación en la UTSLRC (San Luis Río Colorado) con: adb emu geo fix -114.71727561714322 32.43786004187378
 
 ## Ejemplo de POST `/api/sos`
 
