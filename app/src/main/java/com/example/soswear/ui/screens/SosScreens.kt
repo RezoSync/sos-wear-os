@@ -52,7 +52,7 @@ fun HomeScreen(
     val hapticFeedback = LocalHapticFeedback.current
     ScalingLazyColumn(
         modifier = Modifier.fillMaxSize(),
-        contentPadding = PaddingValues(horizontal = 8.dp, top = 4.dp, bottom = 24.dp),
+        contentPadding = PaddingValues(start = 8.dp, top = 4.dp, end = 8.dp, bottom = 24.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
         userScrollEnabled = false,
